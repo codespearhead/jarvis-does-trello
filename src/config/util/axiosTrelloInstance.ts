@@ -6,7 +6,7 @@ dotenv.config()
 
 const axiosTrello = axios.create({
     baseURL: 'https://api.trello.com/1',
-    timeout: 5000,
+    timeout: 10000,
     headers: {
         'Accept': 'application/json',
         'key': process.env.TRELLO_API_KEY,
