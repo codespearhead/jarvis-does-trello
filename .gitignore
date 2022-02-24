@@ -1,3 +1,6 @@
+# Output Folder
+dist/
+
 # Logs
 logs
 *.log
