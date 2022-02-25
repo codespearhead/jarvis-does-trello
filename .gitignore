@@ -1,5 +1,8 @@
-# Output Folder
-dist/
+# Output folder
+dist/*
+
+# Test file
+src/test.ts
 
 # Logs
 logs
