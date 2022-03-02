@@ -8,7 +8,7 @@
  * - bug: create a type for variable card
  * - feat: add the remainder of the properties in the switch(parameters[0]). Currently all other parameters other than the first element in the array will be ignored
  */
-export async function operationsOnCards(cardArray: any, parameters: string[]): Promise<object[]> {
+export async function operationsOnCards(cardArray: any, parameters: string[]): Promise<object> {
     let temporaryData: any = [];
     let allowedArguments = ["name", "id", "due", "start"];
     let numberOfProperties = cardArray.length;
@@ -26,8 +26,8 @@ export async function operationsOnCards(cardArray: any, parameters: string[]): P
             }
 
         }
-        return temporaryData;
+        return { "statusText": "OK", "data": temporaryData }
     } catch (err) {
-        return ([{"status": err}])
+        return { "statusText": "FAIL", "error": err }
     }
 }

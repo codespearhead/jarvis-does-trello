@@ -1,6 +1,5 @@
-import { resolve } from "path/posix";
-import { AxiosRequestConfig, AxiosResponse, axiosTrello, axiosPutTrello, axios } from "../util/axiosTrelloInstance";
-import * as jarvis from "./jarvisTrelloOperations";
+import { AxiosResponse, axiosTrello } from "../util/axiosTrelloInstance";
+import * as jarvisOperations from "./jarvisTrelloOperations";
 
 /**
  * Fetch information about a list on cards in it
@@ -12,8 +11,8 @@ import * as jarvis from "./jarvisTrelloOperations";
  * - bug: create a type for variable response, which holds an array of JSON objects as follows, where both the keys and their values are either strings or other (nested) JSON object: [{...}, {...}, {"foo": {...}, ...}]
  * - feat: add the remainder of the properties in the switch(parameters[0]). All paramenters that aren't either "name" or "id" will return [{"error": "parameter yet to be implemented"}]
  */
-export async function getList(idList: string, parameters: string[] = []): Promise<object[]> {
-    let response: object[];
+export async function getList(idList: string, parameters: string[] = []): Promise<object> {
+    let response: object;
     try {
         let trelloApiResponse: AxiosResponse;
         switch (parameters.length) {
@@ -30,7 +29,7 @@ export async function getList(idList: string, parameters: string[] = []): Promis
                     case "cards":
                         trelloApiResponse = await axiosTrello.get(`/lists/${idList}/${parameters[0]}`);
                         parameters.shift(); // remove first element of array
-                        response = await jarvis.operationsOnCards(trelloApiResponse.data, parameters);
+                        response = await jarvisOperations.operationsOnCards(trelloApiResponse.data, parameters);
                         break;
                     default:
                         throw `Argument [ ${parameters[0]} ] is either malformed or yet to be implemented`;
@@ -39,7 +38,7 @@ export async function getList(idList: string, parameters: string[] = []): Promis
         }
         return response
     } catch (err) {
-        return [{ "status": err }]
+        return { error: err }
     }
 }
 
@@ -52,9 +51,10 @@ export async function getList(idList: string, parameters: string[] = []): Promis
  * 
  * TODO:
  * - bug: create a type for variable response, which holds an array of JSON objects as follows, where both the keys and their values are either strings or other (nested) JSON object: [{...}, {...}, {"foo": {...}, ...}]
- */
-export async function getCard(idCard: string, parameters: string[] = []): Promise<object[]> {
-    let response: object[];
+ * - Trello returns status: 200 even if the parameters are malformed and the API call does nothing 
+*/
+export async function getCard(idCard: string, parameters: string[] = []): Promise<object> {
+    let response: object;
     try {
         let trelloApiResponse: AxiosResponse;
         switch (parameters.length) {
@@ -70,13 +70,13 @@ export async function getCard(idCard: string, parameters: string[] = []): Promis
                 trelloApiResponse = await axiosTrello.get(`/cards/${idCard}`);
 
                 // The API returns a JSON object instead of a JSON object inside an array, so in order to standardize the arguments passed to the following method, it's best to pass the fetched data inside an array 
-                response = await jarvis.operationsOnCards([trelloApiResponse.data], parameters);
+                response = await jarvisOperations.operationsOnCards([trelloApiResponse.data], parameters);
                 break;
 
         }
         return response
     } catch (err) {
-        return [{ "status": err }]
+        return { error: err }
     }
 }
 
@@ -89,16 +89,17 @@ export async function getCard(idCard: string, parameters: string[] = []): Promis
  * 
  * TODO:
  * - bug: create a type for variable response, which holds an array of JSON objects as follows, where both the keys and their values are either strings or other (nested) JSON object: [{...}, {...}, {"foo": {...}, ...}]
- */
-export async function updateCard(idCard: string, parameters: any): Promise<object[]> {
+ * - improvement: parameters' type shouldn't be any 
+*/
+export async function updateCard(idCard: string, parameters: any): Promise<object> {
     try {
         //let trelloApiResponse: AxiosResponse;
-        let trelloApiResponse = await axiosPutTrello.put(`/cards/${idCard}`, JSON.stringify(parameters));
+        let trelloApiResponse = await axiosTrello.put(`/cards/${idCard}`, JSON.stringify(parameters));
         let response: any
         response = trelloApiResponse;
         //let response = Promise.resolve([{"Status": "Yet to create function"}])
         return response
     } catch (err) {
-        return [{ "status": err }]
+        return { error: err }
     }
 }
