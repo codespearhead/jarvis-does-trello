@@ -11,7 +11,8 @@ const cases = [
 test.each(cases)("", async (A) => {
     await expect(
         dateDifference(
-            A["dateOne"], A["dateTwo"])
+            A["dateOne"], A["dateTwo"]
+        )
     ).resolves.toBe(
         A["return"]
     );
