@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "rm -rf dist/* && npx tsc && clear && npx jest --verbose",
-    "start": "npx tsc && clear && node dist/index.js"
+    "build": "clear && npx tsc",
+    "jest": "clear && npx jest --verbose",
+    "test": "clear && npx tsc && node dist/test.js",
+    "start": "clear && node dist/index.js"
   },
   "repository": {
     "type": "git",
