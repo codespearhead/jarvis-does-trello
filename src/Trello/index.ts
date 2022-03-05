@@ -7,9 +7,10 @@ async function main(configJSON: any[]): Promise<void> {
     for (let bot of configJSON) {
         await addDeadline({
             idList: bot["idList"],
-            dateIntervalInDays: bot["dateIntervalInDays"]
+            dateIntervalInDays: bot["dateIntervalInDays"],
+            sleepTime: 5
         });
-        await sleep(10);
+        await sleep(30);
     }
 }
 

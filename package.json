@@ -7,7 +7,7 @@
     "build": "rm -rf ./dist && npx tsc",
     "jest": "clear && npx jest --verbose",
     "test": "clear && npx tsc && npx jest --verbose",
-    "start": "clear && node dist/index.js"
+    "start": "clear && node ./dist/Trello/index.js"
   },
   "repository": {
     "type": "git",
