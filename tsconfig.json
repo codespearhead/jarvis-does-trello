@@ -6,6 +6,7 @@
         "target": "es2019",
         "noImplicitAny": true,
         "moduleResolution": "node",
+        "rootDir": "src",
         "sourceMap": false,
         "outDir": "dist",
         "baseUrl": ".",
@@ -16,8 +17,9 @@
             ]
         }
     },
-    "include": [
-        "src/**/*",
-        "tests/**/*"
-, "dateDifference.js"    ]
+    "exclude": [
+        "node_modules",
+        "ignore",
+        "*.test.js"
+    ]
 }
