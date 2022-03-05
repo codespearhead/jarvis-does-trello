@@ -11,6 +11,7 @@
  */
 
 interface dayDifferenceInterface {
+    other?: any,
     dateStart: string,
     dateEnd: string,
     numberOfDaysApart: number
@@ -35,8 +36,10 @@ export async function dayDifference(args: dayDifferenceInterface): Promise<objec
     }
     else
         dateEnd = new Date(args["dateEnd"])
-
-    return { "start": dateStart, "end": dateEnd, "shouldChange": shouldChange };
+    if (!args["other"])
+        return { "start": dateStart, "end": dateEnd, "shouldChange": shouldChange };
+    else
+        return { "other": args["other"], "start": dateStart, "end": dateEnd, "shouldChange": shouldChange };
 }
 
 // async function localTest() {
