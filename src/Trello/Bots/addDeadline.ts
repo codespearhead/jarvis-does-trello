@@ -1,10 +1,12 @@
 import { getList } from "../Functions/getList";
 import { updateCards } from "../Functions/updateCards";
 import { dayDifference } from "../util/generalFunctions/dateDifference"
+import { sleep } from "../util/generalFunctions/sleep";
 
 interface addDeadlineInterface {
     idList: string,
-    dateIntervalInDays: number
+    dateIntervalInDays: number,
+    sleepTime: number
 }
 
 export async function addDeadline(args: addDeadlineInterface): Promise<string> {
@@ -29,6 +31,7 @@ export async function addDeadline(args: addDeadlineInterface): Promise<string> {
 
     // Push changes to Trello
     for (let card of cardUpdatedArray) {
+        await sleep(args["sleepTime"]);
         if (card["shouldChange"]) {
             updateCards({
                 idCard: card["other"],
