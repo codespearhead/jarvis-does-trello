@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "clear && npx tsc",
+    "build": "rm -rf ./dist && npx tsc",
     "jest": "clear && npx jest --verbose",
-    "test": "clear && npx tsc && node dist/test.js",
+    "test": "clear && npx tsc && npx jest --verbose",
     "start": "clear && node dist/index.js"
   },
   "repository": {

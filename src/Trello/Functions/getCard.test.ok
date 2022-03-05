@@ -1,0 +1,21 @@
+module = require("../../../dist/Trello/Functions/getCard");
+const testData = require("./getCard.test.json");
+
+const cases = [
+    { "testData": testData, "return": testData },
+    { "cardProperties": ["name"], "testData": testData, "return": { step: "next" } },
+    { "idCard": "any string", "cardProperties": ["name"], "return": { step: "next" } }
+];
+
+test.each(cases)("", async (unitCase) => {
+    let response = await module.getCard({
+        idCard: unitCase["idCard"],
+        cardProperties: unitCase["cardProperties"],
+        testData: unitCase["testData"]
+    });
+    await expect(
+        response
+    ).toEqual(
+        unitCase["return"]
+    );
+});
