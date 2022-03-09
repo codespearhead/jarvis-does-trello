@@ -1,0 +1,75 @@
+const jarvis = require("../../../dist/Trello/index");
+
+const testData = require("./filterCards.test.json");
+
+const cases = [
+    {
+        "cardArray": testData,
+        "return": {
+            statusText: 'OK',
+            data: testData
+        }
+    },
+];
+
+test.each(cases)("", async (unitCase) => {
+    let response = await jarvis.filterCards({
+        cardArray: unitCase["cardArray"],
+        cardProperties: unitCase["cardProperties"]
+    });
+    await expect(
+        response
+    ).toEqual(
+        unitCase["return"]
+    );
+});
+
+    // {
+    //     "cardArray": testData,
+    //     "cardProperties": ["name"],
+    //     "return": {
+    //         statusText: 'OK',
+    //         data: [
+    //             { name: 'Card 1' },
+    //             { name: 'Card 2' },
+    //             { name: 'Card 3' },
+    //             { name: 'Card 4' },
+    //             { name: 'Card 5' },
+    //             { name: 'Card 6' }
+    //         ]
+    //     }
+    // },
+    // {
+    //     "cardArray": testData,
+    //     "cardProperties": ["name", "id"],
+    //     "return": {
+    //         statusText: 'OK',
+    //         data: [
+    //             { name: 'Card 1', id: '60fa41555c017a81ce406486' },
+    //             { name: 'Card 2', id: '612bfeb4d3b75f6f89c7b20a' },
+    //             { name: 'Card 3', id: '60fd985ffdce8910d6723cb0' },
+    //             { name: 'Card 4', id: '6137c28da3e07f6ba07ff01e' },
+    //             { name: 'Card 5', id: '6216813334e8d64b77e547d2' },
+    //             { name: 'Card 6', id: '621e7d1ef9b99e634a6a5853' }
+    //         ]
+    //     }
+
+    // async function localTest() {
+//     const jsonObj = require("../../../src/Trello/Functions/filterCards.test.json");
+//     let tests: any = []
+//     tests.push(await filterCards({
+//         cardArray: jsonObj
+//     }));
+//     tests.push(await filterCards({
+//         cardArray: jsonObj,
+//         cardProperties: ["name"]
+//     }));
+//     tests.push(await filterCards({
+//         cardArray: jsonObj,
+//         cardProperties: ["name", "id"]
+//     }));
+//     for (let data of tests)
+//         console.log(data);
+// }
+
+// localTest();

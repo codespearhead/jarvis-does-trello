@@ -1,4 +1,5 @@
-import { AxiosResponse, axiosTrello } from "../util/axiosTrelloInstance";
+import axios from "axios";
+import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance";
 import { filterCards } from "./filterCards";
 
 /**
@@ -12,26 +13,36 @@ import { filterCards } from "./filterCards";
  * - feat: add the remainder of the properties in the switch(parameters[0]). All paramenters that aren't either "name" or "id" will return [{"error": "parameter yet to be implemented"}]
  */
 
-interface getListInterface {
+
+export async function getList(args: {
+    auth?: { "key": string | undefined, "token": string | undefined } | undefined,
     idList: string | object[],
     getCardsInList?: boolean,
     cardParameters?: string[]
-}
-
-export async function getList(args: getListInterface): Promise<object> {
+}): Promise<object>
+{
     let trelloApiResponse: AxiosResponse;
     let response: object;
     let extraParm = ""
+
+    let authParams;
+    if (!args.auth || args.auth === {"key": undefined, "token": undefined }) {
+        authParams = undefined
+    } else {
+        authParams = {"key": args.auth.key, "token": args.auth.token }
+    }
+
     if (args["getCardsInList"]) {
         extraParm = "cards";
     }
+
     try {
         if (typeof args["idList"] === 'string') {
             if (!args["cardParameters"]) {
-                trelloApiResponse = await axiosTrello.get(`/lists/${args["idList"]}/${extraParm}`);
+                trelloApiResponse = await axiosTrello.get(`/lists/${args["idList"]}/${extraParm}`, { params: authParams });
                 response = trelloApiResponse;
             } else {
-                trelloApiResponse = await axiosTrello.get(`/lists/${args["idList"]}/${extraParm}`);
+                trelloApiResponse = await axiosTrello.get(`/lists/${args["idList"]}/${extraParm}`, { params: authParams });
                 response = filterCards({cardArray: trelloApiResponse["data"], cardProperties: args["cardParameters"]});
             }
         } else {
@@ -45,38 +56,3 @@ export async function getList(args: getListInterface): Promise<object> {
         return { error: err }
     }
 }
-
-
-// async function localTest() {
-//     const jsonObject: object[] = require("../../../src/Trello/Functions/getList.test.json")
-//     const idList: string = "6216811a0cd54f0a231dbfa2";
-//     let tests: any = []
-//     tests.push(await getList({
-//         idList: idList
-//     }));
-//     tests.push(await getList({
-//         idList: idList,
-//         getCardsInList: true
-//     }));
-//     tests.push(await getList({
-//         idList: idList,
-//         getCardsInList: true,
-//         cardParameters: ["name"]
-//     }));
-//     tests.push(await getList({
-//         idList: jsonObject
-//     }));
-//     tests.push(await getList({
-//         idList: jsonObject,
-//         cardParameters: ["name"]
-//     }));
-//     tests.push(await getList({
-//         idList: jsonObject,
-//         getCardsInList: true,
-//         cardParameters: ["name"]
-//     }));
-//     for (let data of tests)
-//         console.log(data);
-// }
-
-// // localTest();

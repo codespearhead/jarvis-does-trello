@@ -1,4 +1,4 @@
-import { AxiosResponse, axiosTrello } from "../util/axiosTrelloInstance";
+import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance";
 
 /**
  * Fetch information about a card
@@ -13,22 +13,15 @@ import { AxiosResponse, axiosTrello } from "../util/axiosTrelloInstance";
 
 interface updateCardInterface {
     idCard: string,
-    cardProperties: object,
-    testData?: object
+    cardProperties: any
 }
 
 export async function updateCards(args: updateCardInterface): Promise<object> {
-    let response: object;
     let trelloApiResponse: AxiosResponse;
     try {
-        if (!args["testData"]) {      
-            trelloApiResponse = await axiosTrello.put(`/cards/${args["idCard"]}`, JSON.stringify(args["cardProperties"]));
-            response = trelloApiResponse;
-        }
-        else {
-            response = args["testData"];
-        }
-        return response
+        console.log(JSON.stringify(args["cardProperties"]))
+        //         trelloApiResponse = await axiosTrello.put(`/cards/${args["idCard"]}`, JSON.stringify(args["cardProperties"]))
+            return trelloApiResponse
     } catch (err) {
         return { error: err }
     }

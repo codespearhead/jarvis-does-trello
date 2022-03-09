@@ -1,52 +1,54 @@
-import { getList } from "../Functions/getList";
-import { updateCards } from "../Functions/updateCards";
-import { dayDifference } from "../util/generalFunctions/dateDifference"
-import { sleep } from "../util/generalFunctions/sleep";
+import * as jarvis from "../index"
 
-interface addDeadlineInterface {
+export async function addDeadline(args: {
+    auth?: { "key": string | undefined, "token": string | undefined } | undefined,
     idList: string,
     dateIntervalInDays: number,
-    sleepTime: number
-}
+    sleepTime?: number
+}): Promise<string>
+{
+    let authParams;
+    if (!args.auth || args.auth === {"key": undefined, "token": undefined }) {
+        authParams = undefined
+    } else {
+        authParams = {"key": args.auth.key, "token": args.auth.token }
+    }
 
-export async function addDeadline(args: addDeadlineInterface): Promise<string> {
-    
     // Get relevant information about the cards in the list
-    let cardArray: any = await getList({
+    let cardArray: any = await jarvis.getList({
+        auth: authParams,
         idList: args["idList"],
         getCardsInList: true,
         cardParameters: ["name", "id", "start", "due"]
     });
-
+    // console.log(cardArray);
+    
     // Check which cards need their dates updated
+    
     let cardUpdatedArray: any = [];
     for (let card of cardArray["data"]) {
-        let cardInfoUpdated: object = await dayDifference({
-            other: card["id"],
+        let cardInfoUpdated: any = await jarvis.dayDifference({
+            other: {
+                nameCard: card["name"],
+                idCard: card["id"]
+            },
             dateStart: card["start"],
             dateEnd: card["due"],
-            numberOfDaysApart: args["dateIntervalInDays"]});
-        cardUpdatedArray.push(cardInfoUpdated);
+            numberOfDaysApart: args["dateIntervalInDays"]
+        });
+        if (Object.keys(cardInfoUpdated["dataToUpdate"]).length)
+            cardUpdatedArray.push(cardInfoUpdated)
     }
+    // console.log(cardUpdatedArray)
 
     // Push changes to Trello
     for (let card of cardUpdatedArray) {
-        await sleep(args["sleepTime"]);
-        if (card["shouldChange"]) {
-            updateCards({
-                idCard: card["other"],
-                cardProperties: {"start": card["start"], "due": card["end"]}
-                });
-        }
+        //await jarvis.sleep(args["sleepTime"]);
+        await jarvis.updateCards({
+            idCard: card["other"]["idCard"],
+            cardProperties: card["dataToUpdate"]
+        });
     }
 
     return "Done! :)"
 }
-
-// import dotenv from "dotenv"
-// dotenv.config({path: ".test.env"})
-// dotenv.config()
-// addDeadline({
-//     idList: process.env.TRELLO_LIST1,
-//     dateIntervalInDays: 5
-// });

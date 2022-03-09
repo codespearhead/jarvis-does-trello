@@ -1,5 +1,3 @@
-import { AxiosResponse, axiosTrello } from "../util/axiosTrelloInstance";
-
 /**
  * Operate on card object
  * @param cardArray array of objects containing card data from the API
@@ -11,18 +9,18 @@ import { AxiosResponse, axiosTrello } from "../util/axiosTrelloInstance";
  * - feat: add the remainder of the properties in the switch(parameters[0]). Currently all other parameters other than the first element in the array will be ignored
  */
 
-interface filterCardsInterface {
-    cardArray: any,
-    cardProperties?: string[],
-}
 
 const allowedArguments = ["name", "id", "due", "start"];
 
-export async function filterCards(args: filterCardsInterface): Promise<object> {
+export async function filterCards(args: {
+    cardArray: any,
+    cardProperties?: string[],
+}): Promise<object>
+{
     if (!args.cardProperties)
         return { "statusText": "OK", "data": args["cardArray"] }
 
-    // temporaryData shouldn't be any[], but it workings if it is
+    // temporaryData shouldn't be any[], but it works if it is
     let temporaryData: any[] = [];
     let numberOfCards = args["cardArray"].length;
     let numberOfProperties = args["cardProperties"].length;
@@ -43,23 +41,3 @@ export async function filterCards(args: filterCardsInterface): Promise<object> {
         return { "statusText": "FAIL", "error": err }
     }
 }
-
-// async function localTest() {
-//     const jsonObj = require("../../../src/Trello/Functions/filterCards.test.json");
-//     let tests: any = []
-//     tests.push(await filterCards({
-//         cardArray: jsonObj
-//     }));
-//     tests.push(await filterCards({
-//         cardArray: jsonObj,
-//         cardProperties: ["name"]
-//     }));
-//     tests.push(await filterCards({
-//         cardArray: jsonObj,
-//         cardProperties: ["name", "id"]
-//     }));
-//     for (let data of tests)
-//         console.log(data);
-// }
-
-// localTest();

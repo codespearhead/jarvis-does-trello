@@ -1,5 +1,4 @@
-import { AxiosResponse, axiosTrello } from "../util/axiosTrelloInstance";
-import { filterCards } from "./filterCards";
+import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance";
 
 /**
  * Fetch information about a card
@@ -12,13 +11,13 @@ import { filterCards } from "./filterCards";
  * - Trello returns status: 200 even if the parameters are malformed and the API call does nothing 
 */
 
-interface getCardInterface {
+
+export async function getCard(args: {
     idCard?: string,
     cardProperties?: string[],
     testData?: object
-}
-
-export async function getCard(args: getCardInterface): Promise<object> {
+}): Promise<object>
+{
     let response: object;
     let trelloApiResponse: AxiosResponse;
     try {
@@ -29,8 +28,10 @@ export async function getCard(args: getCardInterface): Promise<object> {
             else
                 response = { step: "next" };
         else {
-            if (!args["cardProperties"])
-                trelloApiResponse = await axiosTrello.get(`/cards/${args["idCard"]}`);
+            if (!args["cardProperties"]) {
+            trelloApiResponse = await axiosTrello.get(`/cards/${args["idCard"]}`);
+            response = trelloApiResponse
+            }
             else
                 response = { step: "next" };
         }
@@ -39,14 +40,3 @@ export async function getCard(args: getCardInterface): Promise<object> {
         return { error: err };
     }
 }
-
-// async function localTest() {
-//     const jsonObj = require("../../../src/Trello/Functions/getCard.test.json");
-//     let tests = [];
-//     tests.push(await getCard({ testData: [jsonObj] }));
-//     tests.push(await getCard({ cardProperties: ["name"], testData: [jsonObj] }));
-//     tests.push(await getCard({ cardProperties: [], testData: [jsonObj] }));
-//     console.log(tests);
-// }
-
-// localTest()
