@@ -32,20 +32,3 @@ export async function dateToday(args: dayDifferenceInterface): Promise<object> {
     else
         return { "other": args["other"], "start": dateStart, "shouldChange": shouldChange };
 }
-
-// async function localTest() {
-//     let tests: any = [];
-//     tests.push(await dateToday({dateStart: null, dateEnd: null, numberOfDaysApart: 5}));
-//     tests.push(await dateToday({dateStart: null, dateEnd: "2022-03-03T03:59:59.000Z", numberOfDaysApart: 5}));
-//     tests.push(await dateToday({dateStart: "2022-03-03T03:59:59.000Z", dateEnd: null, numberOfDaysApart: 5}));
-//     // const jsonObject: object[] = require("../../../Trello/util/generalFunctions/dateDifference.test.json")
-//     // let tests: any = []
-//     // tests.push(await dayDifference({
-//     //     idList: idList
-//     // }));
-//     // for (let data of tests)
-//     //     console.log(data);
-//     console.log(tests);
-// }
-
-// localTest();

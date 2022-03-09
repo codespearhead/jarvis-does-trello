@@ -1,0 +1,34 @@
+// async function localTest()
+// {
+//     const jsonObject: object[] = require("../../../src/Trello/Functions/getList.test.json")
+//     const idList: string = "6216811a0cd54f0a231dbfa2";
+//     let tests: any = []
+//     tests.push(await getList({
+//         idList: idList
+//     }));
+//     tests.push(await getList({
+//         idList: idList,
+//         getCardsInList: true
+//     }));
+//     tests.push(await getList({
+//         idList: idList,
+//         getCardsInList: true,
+//         cardParameters: ["name"]
+//     }));
+//     tests.push(await getList({
+//         idList: jsonObject
+//     }));
+//     tests.push(await getList({
+//         idList: jsonObject,
+//         cardParameters: ["name"]
+//     }));
+//     tests.push(await getList({
+//         idList: jsonObject,
+//         getCardsInList: true,
+//         cardParameters: ["name"]
+//     }));
+//     for (let data of tests)
+//         console.log(data);
+// }
+
+// localTest();

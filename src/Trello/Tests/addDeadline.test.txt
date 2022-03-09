@@ -1,0 +1,8 @@
+// import dotenv from "dotenv"
+// dotenv.config({path: ".test.env"})
+// dotenv.config()
+// addDeadline({
+//     idList: process.env.TRELLO_LIST1,
+//     dateIntervalInDays: 5,
+//     sleepTime: 0
+// });
