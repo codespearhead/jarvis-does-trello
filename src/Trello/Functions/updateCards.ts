@@ -1,4 +1,5 @@
-import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance";
+import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance"
+import { sleep } from "../index"
 
 /**
  * Fetch information about a card
@@ -11,18 +12,28 @@ import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance";
  * - improvement: parameters' type shouldn't be any 
 */
 
-interface updateCardInterface {
+
+export async function updateCards(args: {
+    auth?: { "key": string | undefined, "token": string | undefined } | undefined,
     idCard: string,
     cardProperties: any
-}
+}): Promise<void>
+{
 
-export async function updateCards(args: updateCardInterface): Promise<object> {
-    let trelloApiResponse: AxiosResponse;
-    try {
-        console.log(JSON.stringify(args["cardProperties"]))
-        //         trelloApiResponse = await axiosTrello.put(`/cards/${args["idCard"]}`, JSON.stringify(args["cardProperties"]))
-            return trelloApiResponse
-    } catch (err) {
-        return { error: err }
+    await sleep(2)
+    let authParams
+    let trelloApiResponse: AxiosResponse
+
+    if (!args.auth || args.auth === {"key": undefined, "token": undefined }) {
+        authParams = undefined
+    } else {
+        authParams = {"key": args.auth.key, "token": args.auth.token }
     }
+
+    try {
+        trelloApiResponse = await axiosTrello.put(`/cards/${args["idCard"]}`, args["cardProperties"], {params: authParams})
+    } catch (err) {
+        console.log({error: err })
+    }
+
 }

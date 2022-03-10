@@ -10,25 +10,27 @@
  * - improvement: the function fails if the dates are not in the same month or year
  */
 
-interface dayDifferenceInterface {
+
+export async function dateToday(args: {
     other?: any,
     dateStart: string,
-}
+}): Promise<object>
+{
 
-export async function dateToday(args: dayDifferenceInterface): Promise<object> {
-    const today = new Date();
+    const today = new Date()
     today.setHours(0, 0, 0, 0)
-    let dateStart: Date = new Date(today);
-    let shouldChange: boolean = false;
+    let dateStart: Date = new Date(today)
+    let shouldChange: boolean = false
 
     if (!args["dateStart"]) {
-        dateStart = today;
-        shouldChange = true;
+        dateStart = today
+        shouldChange = true
     }
     else
         dateStart = new Date(args["dateStart"])
     if (!args["other"])
-        return { "start": dateStart, "shouldChange": shouldChange };
+        return { "start": dateStart, "shouldChange": shouldChange }
     else
-        return { "other": args["other"], "start": dateStart, "shouldChange": shouldChange };
+        return { "other": args["other"], "start": dateStart, "shouldChange": shouldChange }
+
 }

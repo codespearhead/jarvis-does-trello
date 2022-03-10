@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf ./dist && npx tsc",
-    "dev": "npm run build && clear && node ./dist/Trello/Tests/minimalWorkingExample.js",
+    "dev": "npm run build && clear && clear && node ./dist/Trello/Tests/minimalWorkingExample.js",
     "jest": "clear && npx jest --verbose --collectCoverageFrom=./src/Trello/Tests/ --testPathIgnorePatterns=/Working/",
     "test": "clear && npx jest --collectCoverageFrom=./src/Trello/Tests/Working",
     "start": "clear && node ./dist/Trello/index.js"

@@ -1,6 +1,5 @@
-import axios from "axios";
-import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance";
-import { filterCards } from "./filterCards";
+import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance"
+import { filterCards } from "./filterCards"
 
 /**
  * Fetch information about a list on cards in it
@@ -21,8 +20,9 @@ export async function getList(args: {
     cardParameters?: string[]
 }): Promise<object>
 {
-    let trelloApiResponse: AxiosResponse;
-    let response: object;
+
+    let trelloApiResponse: AxiosResponse
+    let response: object
     let extraParm = ""
 
     let authParams;
@@ -33,26 +33,27 @@ export async function getList(args: {
     }
 
     if (args["getCardsInList"]) {
-        extraParm = "cards";
+        extraParm = "cards"
     }
 
     try {
         if (typeof args["idList"] === 'string') {
             if (!args["cardParameters"]) {
-                trelloApiResponse = await axiosTrello.get(`/lists/${args["idList"]}/${extraParm}`, { params: authParams });
-                response = trelloApiResponse;
+                trelloApiResponse = await axiosTrello.get(`/lists/${args["idList"]}/${extraParm}`, { params: authParams })
+                response = trelloApiResponse
             } else {
-                trelloApiResponse = await axiosTrello.get(`/lists/${args["idList"]}/${extraParm}`, { params: authParams });
-                response = filterCards({cardArray: trelloApiResponse["data"], cardProperties: args["cardParameters"]});
+                trelloApiResponse = await axiosTrello.get(`/lists/${args["idList"]}/${extraParm}`, { params: authParams })
+                response = filterCards({cardArray: trelloApiResponse["data"], cardProperties: args["cardParameters"]})
             }
         } else {
             if (!args["cardParameters"])
-                response = args["idList"];
+                response = args["idList"]
             else
-                response = { step: "next" };
+                response = { step: "next" }
         }
         return response
     } catch (err) {
         return { error: err }
     }
+
 }

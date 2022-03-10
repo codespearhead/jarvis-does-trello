@@ -1,2 +1,2 @@
-export * from "./axiosTrelloInstance";
-export * from "./generalFunctions/index";
+export * from "./axiosTrelloInstance"
+export * from "./generalFunctions/index"
