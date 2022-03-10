@@ -18,25 +18,27 @@ export async function getCard(args: {
     testData?: object
 }): Promise<object>
 {
-    let response: object;
-    let trelloApiResponse: AxiosResponse;
+
+    let response: object
+    let trelloApiResponse: AxiosResponse
     try {
         if (args["testData"])
             if (!args["cardProperties"]) {
-                response = args["testData"];
+                response = args["testData"]
             }
             else
-                response = { step: "next" };
+                response = { step: "next" }
         else {
             if (!args["cardProperties"]) {
-            trelloApiResponse = await axiosTrello.get(`/cards/${args["idCard"]}`);
+            trelloApiResponse = await axiosTrello.get(`/cards/${args["idCard"]}`)
             response = trelloApiResponse
             }
             else
                 response = { step: "next" };
         }
-        return response;
+        return response
     } catch (err) {
-        return { error: err };
+        return { error: err }
     }
+
 }

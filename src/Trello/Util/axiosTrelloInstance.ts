@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"
 import { AxiosResponse, AxiosInstance } from "axios"
 
 export { AxiosResponse }

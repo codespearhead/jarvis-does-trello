@@ -1,11 +1,6 @@
 # Output folder
 dist/*
 
-# Test file
-src/test.ts
-src/test.json
-src/test1.json
-
 # Logs
 logs
 *.log

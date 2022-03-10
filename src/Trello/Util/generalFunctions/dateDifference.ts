@@ -17,6 +17,7 @@ export async function dayDifference(args: {
     numberOfDaysApart: number
 }): Promise<object>
 {
+
     const today = new Date();
     today.setHours(0, 0, 0, 0)
 
@@ -42,4 +43,5 @@ export async function dayDifference(args: {
     }
     
     return returnData;
+
 }
