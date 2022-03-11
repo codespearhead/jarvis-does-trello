@@ -1,0 +1,26 @@
+{
+    "name": "jarvis-does-trello",
+    "version": "0.0.6",
+    "description": "",
+    "main": "index.js",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Paguiar735/jarvis-does-trello.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "Apache-2.0",
+    "bugs": {
+      "url": "https://github.com/Paguiar735/jarvis-does-trello/issues"
+    },
+    "homepage": "https://github.com/Paguiar735/jarvis-does-trello#readme",
+    "dependencies": {
+      "axios": "^0.26.0"
+    },
+    "devDependencies": {
+      "@types/node": "^17.0.21",
+      "dotenv": "^16.0.0",
+      "jest": "^27.5.1",
+      "typescript": "^4.5.5"
+    }
+  }

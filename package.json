@@ -1,12 +1,12 @@
 {
   "name": "jarvis-does-trello",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "",
-  "main": "./dist/Trello/index.js",
+  "main": "./dist/jarvis-does-trello/index.js",
   "scripts": {
-    "build": "rm -rf ./dist && npx tsc --build tsconfig.json",
-    "buildc": "rm -rf ./dist && npx tsc --build tsconfig.client.json",
-    "dev": "npm run build && clear && node ./dist/Trello/Tests/minimalWorkingExample.js",
+    "build": "rm -rf ./dist && npx tsc --build tsconfig.client.json && cp src/jarvis-does-trello/package.json dist/jarvis-does-trello/package.json",
+    "builds": "rm -rf ./dist && npx tsc --build tsconfig.json",
+    "dev": "npm run builds && clear && node ./dist/Trello/Tests/minimalWorkingExample.js",
     "jest": "clear && npx jest --verbose --collectCoverageFrom=./src/Trello/Tests/ --testPathIgnorePatterns=/Working/",
     "test": "clear && npx jest --collectCoverageFrom=./src/Trello/Tests/Working",
     "start": "clear && node ./dist/Trello/index.js"
