@@ -8,33 +8,38 @@ export async function addDeadline(args: {
 }): Promise<void>
 {
 
+    // Assign proper value to all parameters
+
     let sleepTime = args["sleepTime"]
     if (!sleepTime)
-        sleepTime = 3
+        sleepTime = 2.5
 
-    let authParams;
+    let authParams: { "key": string | undefined, "token": string | undefined } | undefined
     if (!args.auth || args.auth === {"key": undefined, "token": undefined }) {
         authParams = undefined
     } else {
         authParams = {"key": args.auth.key, "token": args.auth.token }
     }
 
+
     // Get relevant information about the cards in the list
+
     let cardArray: any = await jarvis.getList({
         auth: authParams,
         idList: args["idList"],
         getCardsInList: true,
-        cardParameters: ["name", "id", "start", "due"]
+        cardParameters: ["id", "start", "due"]
     });
 
-    console.log("[OK] addDeadline - Phase 1: getList")
+    console.log("[OK] addDeadline - Phase 1/3: getList")
     
+
     // Check which cards need their dates updated
+
     let cardUpdatedArray: any = [];
     for (let card of cardArray["data"]) {
         let cardInfoUpdated: any = await jarvis.dayDifference({
             other: {
-                nameCard: card["name"],
                 idCard: card["id"]
             },
             dateStart: card["start"],
@@ -45,9 +50,11 @@ export async function addDeadline(args: {
             cardUpdatedArray.push(cardInfoUpdated)
     }
 
-    console.log("[OK] addDeadline - Phase 2: Get cardUpdatedArray")
+    console.log("[OK] addDeadline - Phase 2/3: Get cardUpdatedArray")
 
-    // Push changes to Trello (Update Card not Working)
+
+    // Push changes to Trello
+
     for (let card of cardUpdatedArray) {
         await jarvis.sleep(sleepTime);
         await jarvis.updateCards({
@@ -57,6 +64,6 @@ export async function addDeadline(args: {
         });
     }
 
-    console.log("[OK] addDeadline - Phase 3: updateCards")
+    console.log("[OK] addDeadline - Phase 3/3: updateCards")
 
 }
