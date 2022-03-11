@@ -4,6 +4,6 @@
         "declaration": true
     },
     "exclude": [
-        "./src/Trello/Tests"
+        "./src/jarvis-does-trello/Tests"
     ]
 }
