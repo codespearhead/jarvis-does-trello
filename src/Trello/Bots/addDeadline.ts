@@ -8,6 +8,10 @@ export async function addDeadline(args: {
 }): Promise<void>
 {
 
+    let sleepTime = args["sleepTime"]
+    if (!sleepTime)
+        sleepTime = 3
+
     let authParams;
     if (!args.auth || args.auth === {"key": undefined, "token": undefined }) {
         authParams = undefined
@@ -45,7 +49,7 @@ export async function addDeadline(args: {
 
     // Push changes to Trello (Update Card not Working)
     for (let card of cardUpdatedArray) {
-        await jarvis.sleep(args["sleepTime"]);
+        await jarvis.sleep(sleepTime);
         await jarvis.updateCards({
             auth: authParams,
             idCard: card["other"]["idCard"],
