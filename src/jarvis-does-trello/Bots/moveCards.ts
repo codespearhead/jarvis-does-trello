@@ -4,11 +4,11 @@ export async function moveCards(args: {
     auth?: { "key": string | undefined, "token": string | undefined } | undefined,
     idListSource: string,
     idListTarget: string,
+    idBoardTarget?: string,
     reverseOrder?: boolean,
     sleepTime?: number,
     position?: "top" | "bottom"
-}): Promise<void>
-{
+}): Promise<void> {
 
     // Assign proper value to all parameters
 
@@ -24,16 +24,25 @@ export async function moveCards(args: {
     let position = args["position"]
     if (!position)
         position = "top"
-    
+
     // However, the Trello API returns the cards in the same order if {pos="bottom"}
     if (position === "bottom")
-        reverseOrder = !reverseOrder    
+        reverseOrder = !reverseOrder
+
+    // if the target list is in another board, you should disclose the id of that board
+    let cardDestination: { idList: string, idBoard?: string, pos: string } = { idList: args["idListTarget"], pos: args["position"] }
+    if (args["idBoardTarget"]) {
+        cardDestination["idBoard"] = args["idBoardTarget"]
+
+        // Funnily enough, it returns the cards in the correct order if the list is another board. Man I love this API
+        reverseOrder = !reverseOrder
+    }
 
     let authParams: { "key": string | undefined, "token": string | undefined } | undefined
-    if (!args.auth || args.auth === {"key": undefined, "token": undefined }) {
+    if (!args.auth || args.auth === { "key": undefined, "token": undefined }) {
         authParams = undefined
     } else {
-        authParams = {"key": args.auth.key, "token": args.auth.token }
+        authParams = { "key": args.auth.key, "token": args.auth.token }
     }
 
 
@@ -56,7 +65,7 @@ export async function moveCards(args: {
 
     console.log("[OK] moveCards - Phase 2/2: Reverse card order if need be")
 
- 
+
     // Push changes to Trello
 
     for (let card of cardArray["data"]) {
@@ -64,7 +73,7 @@ export async function moveCards(args: {
         await jarvis.updateCards({
             auth: authParams,
             idCard: card["id"],
-            cardProperties: {idList: args["idListTarget"], pos: position}
+            cardProperties: cardDestination
         });
     }
 

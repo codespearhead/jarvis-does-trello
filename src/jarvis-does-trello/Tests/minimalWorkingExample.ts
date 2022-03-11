@@ -19,6 +19,8 @@ jarvis.moveCards({
         key: process.env.TRELLO_API_KEY_BOT_7,
         token: process.env.TRELLO_API_TOKEN_BOT_7,
     },
-    idListSource: process.env.TRELLO_LIST2,
-    idListTarget: process.env.TRELLO_LIST3
+    idListSource: process.env.TRELLO_LIST4,
+    idListTarget: process.env.TRELLO_LIST2,
+    idBoardTarget: process.env.TRELLO_BOARD1,
+    reverseOrder: true
 })
