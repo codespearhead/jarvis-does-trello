@@ -20,8 +20,7 @@ export async function updateCards(args: {
 }): Promise<void>
 {
 
-    await sleep(2)
-    let authParams
+    let authParams: { "key": string | undefined, "token": string | undefined } | undefined
     let trelloApiResponse: AxiosResponse
 
     if (!args.auth || args.auth === {"key": undefined, "token": undefined }) {
