@@ -15,28 +15,16 @@ import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance";
 export async function getCard(args: {
     idCard?: string,
     cardProperties?: string[],
-    testData?: object
+    testData?: object,
+    auth?: { "key": string | undefined, "token": string | undefined } | undefined
 }): Promise<object>
 {
 
-    let response: object
     let trelloApiResponse: AxiosResponse
+
     try {
-        if (args["testData"])
-            if (!args["cardProperties"]) {
-                response = args["testData"]
-            }
-            else
-                response = { step: "next" }
-        else {
-            if (!args["cardProperties"]) {
-            trelloApiResponse = await axiosTrello.get(`/cards/${args["idCard"]}`)
-            response = trelloApiResponse
-            }
-            else
-                response = { step: "next" };
-        }
-        return response
+        trelloApiResponse = await axiosTrello.get(`/cards/${args["idCard"]}`, {params: args["auth"]})
+        return trelloApiResponse
     } catch (err) {
         return { error: err }
     }

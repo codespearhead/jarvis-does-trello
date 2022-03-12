@@ -16,42 +16,26 @@ import { filterCards } from "./filterCards"
 export async function getList(args: {
     auth?: { "key": string | undefined, "token": string | undefined } | undefined,
     idList: string | object[],
-    getCardsInList?: boolean,
-    cardParameters?: string[]
-}): Promise<object>
-{
+    getCardsInList?: boolean
+}): Promise<object> {
 
     let trelloApiResponse: AxiosResponse
-    let response: object
+    let authParams: { "key": string | undefined, "token": string | undefined } | undefined;
     let extraParm = ""
 
-    let authParams;
-    if (!args.auth || args.auth === {"key": undefined, "token": undefined }) {
+    if (!args.auth || args.auth === { "key": undefined, "token": undefined }) {
         authParams = undefined
     } else {
-        authParams = {"key": args.auth.key, "token": args.auth.token }
+        authParams = { "key": args.auth.key, "token": args.auth.token }
     }
-
+    
     if (args["getCardsInList"]) {
         extraParm = "cards"
     }
 
     try {
-        if (typeof args["idList"] === 'string') {
-            if (!args["cardParameters"]) {
-                trelloApiResponse = await axiosTrello.get(`/lists/${args["idList"]}/${extraParm}`, { params: authParams })
-                response = trelloApiResponse
-            } else {
-                trelloApiResponse = await axiosTrello.get(`/lists/${args["idList"]}/${extraParm}`, { params: authParams })
-                response = filterCards({cardArray: trelloApiResponse["data"], cardProperties: args["cardParameters"]})
-            }
-        } else {
-            if (!args["cardParameters"])
-                response = args["idList"]
-            else
-                response = { step: "next" }
-        }
-        return response
+        trelloApiResponse = await axiosTrello.get(`/lists/${args["idList"]}/${extraParm}`, { params: authParams })
+        return trelloApiResponse["data"]
     } catch (err) {
         return { error: err }
     }

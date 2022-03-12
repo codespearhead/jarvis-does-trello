@@ -1,7 +1,7 @@
 import * as jarvis from "../index"
 
 export async function moveCards(args: {
-    auth?: { "key": string | undefined, "token": string | undefined } | undefined,
+    auth: { "key": string | undefined, "token": string | undefined } | undefined,
     idListSource: string,
     idListTarget: string,
     idBoardTarget?: string,
@@ -11,6 +11,7 @@ export async function moveCards(args: {
 }): Promise<void> {
 
     // Assign proper value to all parameters
+
 
     let sleepTime = args["sleepTime"]
     if (!sleepTime)
@@ -48,27 +49,26 @@ export async function moveCards(args: {
 
     // Get relevant information about the cards in the list
 
+
     let cardArray: any = await jarvis.getList({
         auth: authParams,
         idList: args["idListSource"],
-        getCardsInList: true,
-        cardParameters: ["id"]
+        getCardsInList: true
     });
-
+    // cardParameters: ["id"]
     console.log("[OK] moveCards - Phase 1/2: getList")
 
-
     // Reverse order if need be
-
     if (reverseOrder)
-        cardArray["data"].reverse()
+        cardArray.reverse()
 
     console.log("[OK] moveCards - Phase 2/2: Reverse card order if need be")
 
 
     // Push changes to Trello
 
-    for (let card of cardArray["data"]) {
+
+    for (let card of cardArray) {
         await jarvis.sleep(sleepTime);
         await jarvis.updateCards({
             auth: authParams,
@@ -77,6 +77,6 @@ export async function moveCards(args: {
         });
     }
 
-    console.log("[OK] moveCards - Phase 3: updateCards")
+    console.log("[OK] moveCards - Phase 3/3: updateCards")
 
 }

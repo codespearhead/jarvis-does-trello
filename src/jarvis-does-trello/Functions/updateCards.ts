@@ -1,5 +1,4 @@
 import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance"
-import { sleep } from "../index"
 
 /**
  * Fetch information about a card
