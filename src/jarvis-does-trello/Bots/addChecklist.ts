@@ -4,10 +4,12 @@ export async function addChecklist(args: {
     auth?: { "key": string | undefined, "token": string | undefined } | undefined,
     idList: string,
     idCardSource: string,
+    exceptionList?: string[],
     position?: "top" | "bottom",
     sleepTime?: number
 }): Promise<void>
 {
+
 
     // Assign proper value to all parameters
 
@@ -38,6 +40,11 @@ export async function addChecklist(args: {
         idList: args["idList"],
         getCardsInList: true
     });
+
+    // Filter out card in exception list
+    let exceptionList = args["exceptionList"]
+    exceptionList.push(args["idCardSource"])
+    cardArray =  cardArray.filter((card: { [x: string]: string }) => !exceptionList.includes(card["id"]))
     
     console.log("[OK] addChecklist - Phase 1/3: getList and cardSource")
 
@@ -55,7 +62,7 @@ export async function addChecklist(args: {
     // Filter out cards with at least one checklist
     let cardUpdatedArray = []
     for (let card of cardArray["data"])
-        if (card["idChecklists"].length < cardSource.length)
+        if (!card["idChecklists"].length)
             cardUpdatedArray.push(card["id"])
 
     console.log("[OK] addChecklist - Phase 2/3: get cardUpdatedArray")
