@@ -4,9 +4,11 @@ export async function addDeadline(args: {
     auth?: { "key": string | undefined, "token": string | undefined } | undefined,
     idList: string,
     dateIntervalInDays: number,
-    sleepTime?: number
+    sleepTime?: number,
+    exceptionList?: string[]
 }): Promise<void>
 {
+
 
     // Assign proper value to all parameters
 
@@ -32,7 +34,10 @@ export async function addDeadline(args: {
         getCardsInList: true
     });
 
-    // cardParameters: ["id", "start", "due"]
+    // Filter out card in exception list
+    cardArray =  cardArray.filter((card: { [x: string]: string }) => !args["exceptionList"].includes(card["id"]))
+
+
     console.log("[OK] addDeadline - Phase 1/3: getList")
     
 

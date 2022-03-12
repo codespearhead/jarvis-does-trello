@@ -7,8 +7,10 @@ export async function moveCards(args: {
     idBoardTarget?: string,
     reverseOrder?: boolean,
     sleepTime?: number,
-    position?: "top" | "bottom"
+    position?: "top" | "bottom",
+    exceptionList?: string[]
 }): Promise<void> {
+
 
     // Assign proper value to all parameters
 
@@ -55,14 +57,20 @@ export async function moveCards(args: {
         idList: args["idListSource"],
         getCardsInList: true
     });
-    // cardParameters: ["id"]
-    console.log("[OK] moveCards - Phase 1/2: getList")
 
-    // Reverse order if need be
+    // Filter out card in exception list
+    cardArray =  cardArray.filter((card: { [x: string]: string }) => !args["exceptionList"].includes(card["id"]))
+
+    console.log("[OK] moveCards - Phase 1/3: getList")
+
+
+    // Reverse card order if need be
+
+
     if (reverseOrder)
         cardArray.reverse()
 
-    console.log("[OK] moveCards - Phase 2/2: Reverse card order if need be")
+    console.log("[OK] moveCards - Phase 2/3: Reverse card order if need be")
 
 
     // Push changes to Trello

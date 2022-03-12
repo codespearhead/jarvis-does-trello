@@ -14,7 +14,7 @@ const allowedArguments = ["name", "id", "due", "start", "idChecklists"]
 
 export async function filterCards(args: {
     cardArray: any,
-    cardProperties?: string[],
+    cardProperties?: string[]
 }): Promise<object>
 {
 
