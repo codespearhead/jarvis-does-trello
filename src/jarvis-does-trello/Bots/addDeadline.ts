@@ -10,6 +10,7 @@ export async function addDeadline(args: {
 
     // Assign proper value to all parameters
 
+
     let sleepTime = args["sleepTime"]
     if (!sleepTime)
         sleepTime = 2.5
@@ -24,20 +25,22 @@ export async function addDeadline(args: {
 
     // Get relevant information about the cards in the list
 
+
     let cardArray: any = await jarvis.getList({
         auth: authParams,
         idList: args["idList"],
-        getCardsInList: true,
-        cardParameters: ["id", "start", "due"]
+        getCardsInList: true
     });
 
+    // cardParameters: ["id", "start", "due"]
     console.log("[OK] addDeadline - Phase 1/3: getList")
     
 
     // Check which cards need their dates updated
 
+
     let cardUpdatedArray: any = [];
-    for (let card of cardArray["data"]) {
+    for (let card of cardArray) {
         let cardInfoUpdated: any = await jarvis.dayDifference({
             other: {
                 idCard: card["id"]
@@ -54,6 +57,7 @@ export async function addDeadline(args: {
 
 
     // Push changes to Trello
+
 
     for (let card of cardUpdatedArray) {
         await jarvis.sleep(sleepTime);

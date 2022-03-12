@@ -10,7 +10,7 @@
  */
 
 
-const allowedArguments = ["name", "id", "due", "start"]
+const allowedArguments = ["name", "id", "due", "start", "idChecklists"]
 
 export async function filterCards(args: {
     cardArray: any,
