@@ -1,15 +1,3 @@
-/**
- * Operate on card object
- * @param cardArray array of objects containing card data from the API
- * @param parameters array containing allowed arguments
- * @returns array of objects with the information about either the whole card or a specific property of it in the particular order the arguments were passed
- * 
- * TODO:
- * - bug: create a type for variable card and temporaryData
- * - feat: add the remainder of the properties in the switch(parameters[0]). Currently all other parameters other than the first element in the array will be ignored
- */
-
-
 const allowedArguments = ["name", "id", "due", "start", "idChecklists"]
 
 export async function filterCards(args: {

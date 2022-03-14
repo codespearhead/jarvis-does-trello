@@ -1,16 +1,5 @@
 import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance"
 
-/**
- * Fetch information about a card
- * @param idCard id of card
- * @param parameters array containing ["due"]
- * @returns array of objects with the information about either the whole card or a specific property of it in the particular order the arguments were passed
- * 
- * TODO:
- * - bug: create a type for variable response, which holds an array of JSON objects as follows, where both the keys and their values are either strings or other (nested) JSON object: [{...}, {...}, {"foo": {...}, ...}]
- * - improvement: parameters' type shouldn't be any 
-*/
-
 
 export async function updateCards(args: {
     auth?: { "key": string | undefined, "token": string | undefined } | undefined,

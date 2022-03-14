@@ -1,16 +1,3 @@
-/**
- * Get day difference between two date strings
- * @param dateOneString older date
- * @param dateTwoString later date
- * @returns signed integer
- * 
- * TODO:
- * - feat: create a type for (UTC) date string
- * - improvement: the return of the function must have its own type
- * - improvement: the function fails if the dates are not in the same month or year
- */
-
-
 export async function dateToday(args: {
     other?: any,
     dateStart: string,
