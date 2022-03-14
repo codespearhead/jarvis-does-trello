@@ -1,10 +1,24 @@
-import * as jarvis from "../index"
+// import * as jarvis from "../index"
 
-// NodeJS-specific. Run "npm i dotenv" first
-import dotenv from "dotenv"
-dotenv.config({path: ".test.env"})
-dotenv.config({path: ".env"})
+// // NodeJS-specific. Run "npm i dotenv" first
+// import dotenv from "dotenv"
+// dotenv.config({path: ".test.env"})
+// dotenv.config({path: ".env"})
 
+
+const jarvis = require("../../../dist/jarvis-does-trello/index")
+
+// // NodeJS-specific. Run "npm i dotenv" first
+// import dotenv from "dotenv"
+// dotenv.config({path: ".test.env"})
+// dotenv.config({path: ".env"})
+
+async function main() {
+    const envFilesArray = await jarvis.listFilesInFolder("./working/", "UTF-8")
+    console.log(envFilesArray)
+}
+
+main()
 
 // jarvis.addDeadline({
 //     auth: {
