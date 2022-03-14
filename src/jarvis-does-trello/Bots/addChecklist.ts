@@ -43,6 +43,8 @@ export async function addChecklist(args: {
 
     // Filter out card in exception list
     let exceptionList = args["exceptionList"]
+    if (!exceptionList)
+        exceptionList = []
     exceptionList.push(args["idCardSource"])
     cardArray =  cardArray.filter((card: { [x: string]: string }) => !exceptionList.includes(card["id"]))
     

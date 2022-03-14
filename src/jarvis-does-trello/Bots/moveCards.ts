@@ -59,7 +59,10 @@ export async function moveCards(args: {
     });
 
     // Filter out card in exception list
-    cardArray =  cardArray.filter((card: { [x: string]: string }) => !args["exceptionList"].includes(card["id"]))
+    let exceptionList = args["exceptionList"]
+    if (!exceptionList)
+        exceptionList = []
+    cardArray =  cardArray.filter((card: { [x: string]: string }) => !exceptionList.includes(card["id"]))
 
     console.log("[OK] moveCards - Phase 1/3: getList")
 
