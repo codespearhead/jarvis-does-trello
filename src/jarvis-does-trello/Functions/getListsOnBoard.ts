@@ -1,5 +1,5 @@
 import { AxiosResponse, axiosTrello } from "../Util/axiosTrelloInstance"
-import papa from "papaparse"
+// import papa from "papaparse"
 
 export async function getListsOnBoard(args: {
     auth?: { "key": string | undefined, "token": string | undefined } | undefined,
@@ -22,8 +22,8 @@ export async function getListsOnBoard(args: {
             const { id, name } = listInfo
             relevantData.push({"id": id, "name": name})
         }
-        let relevantDataCSV = papa.unparse(relevantData)
-        console.log(relevantDataCSV)
+        // let relevantDataCSV = papa.unparse(relevantData)
+        // console.log(relevantDataCSV)
         return relevantData
     } catch (err) {
         return { error: err }
