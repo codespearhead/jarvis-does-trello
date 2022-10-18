@@ -1,6 +1,6 @@
 {
   "name": "jarvis-does-trello",
-  "version": "0.1.15",
+  "version": "0.1.23",
   "description": "",
   "main": "./dist/jarvis-does-trello/index.js",
   "scripts": {
