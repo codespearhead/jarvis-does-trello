@@ -48,8 +48,8 @@ Cons:
 
 I concluded in my use case, building an in-house solution is a better fit.
 
-> **Note**: In either case, I might rewrite this POC eventually in a way that's production-ready, so those who just need a ready-to-go solution for their Trello workflow don't have to reinvent the wheel.
+In either case, I might rewrite this POC eventually in a way that's production-ready, so those who just need a ready-to-go solution for their Trello workflow don't have to reinvent the wheel.
 
 ## Disclaimer
 
-We are not affiliated, associated, authorized, endorsed by or in any way officially connected to Trello, Inc. (www.trello.com).
+> **Note**: We are not affiliated, associated, authorized, endorsed by or in any way officially connected to Trello, Inc. (www.trello.com).
