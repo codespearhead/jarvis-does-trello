@@ -1,4 +1,4 @@
-<h1 align="center"><a href="https://paguiar.link/jarvis-does-trello">Jarvis Does Trello®</a></h1>
+<h1 align="center"><a href="https://github.com/codespearhead/jarvis-does-trello">Jarvis Does Trello®</a></h1>
 
 > **Warning**: This project does not intend to be a business-ready solution. Use it at your own risk.
 
